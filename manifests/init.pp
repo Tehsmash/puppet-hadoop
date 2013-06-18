@@ -1,9 +1,6 @@
 # /etc/puppet/modules/hadoop/manafests/init.pp
 
-class hadoop {
-
-	notify {"Hello World": }
-
+class hadoop ( $disks = [] ) {
 	Exec {
 		path => ['/bin','/usr/bin','/sbin'],
 	}
@@ -82,6 +79,7 @@ class hadoop {
 		user => "hduser",
 		before => [ File["hadoop-symlink"], File["hadoop-app-dir"]]
 	}
+
 	file { "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}":
 		ensure => "directory",
 		mode => 0644,

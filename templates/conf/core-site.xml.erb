@@ -8,7 +8,7 @@
 </property>
 <property>
   <name>fs.default.name</name>
-  <value>hdfs://<%= scope.lookupvar('hadoop::params::master') %>:<%= scope.lookupvar('hadoop::params::hdfsport') %></value>
+  <value>hdfs://<%= scope.lookupvar('hadoop::params::master') %><%= scope.lookupvar('hadoop::params::domain') %>:<%= scope.lookupvar('hadoop::params::hdfsport') %></value>
   <description>The name of the default file system.  A URI whose
   scheme and authority determine the FileSystem implementation.  The
   uri's scheme determines the config property (fs.SCHEME.impl) naming

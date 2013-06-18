@@ -3,10 +3,35 @@
 <configuration>
 <property>
   <name>mapred.job.tracker</name>
-  <value><%= scope.lookupvar('hadoop::params::master') %>:<%= scope.lookupvar('hadoop::params::jobtrackerport') %></value>
+  <value><%= scope.lookupvar('hadoop::params::master') %><%= scope.lookupvar('hadoop::params::domain') %>:<%= scope.lookupvar('hadoop::params::jobtrackerport') %></value>
+  <description>The host and port that the MapReduce job tracker runs
+  at.  If "local", then jobs are run in-process as a single map
+  and reduce task.
+  </description>
+</property>
+<property>
+  <name>mapred.tasktracker.map.tasks.maximum</name>
+  <value>24</value>
+  <description>The host and port that the MapReduce job tracker runs
+  at.  If "local", then jobs are run in-process as a single map
+  and reduce task.
+  </description>
+</property>
+<property>
+  <name>mapred.tasktracker.reduce.tasks.maximum</name>
+  <value>18</value>
+  <description>The host and port that the MapReduce job tracker runs
+  at.  If "local", then jobs are run in-process as a single map
+  and reduce task.
+  </description>
+</property>
+<property>
+  <name>mapred.child.javaopts</name>
+  <value>-Xmx1024m</value>
   <description>The host and port that the MapReduce job tracker runs
   at.  If "local", then jobs are run in-process as a single map
   and reduce task.
   </description>
 </property>
 </configuration>
+

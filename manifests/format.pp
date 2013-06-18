@@ -1,25 +1,9 @@
 # File for formating all the disks
 
-class hadoop::format {
+class hadoop::format( $drives = ["b"] ) {
 	Exec {
 		path => ["/bin", "/usr/bin", "/sbin"]
 	}
-
-#	file { "/sbin/format-drives-b-x":
-#		ensure => present,
-#		owner => "hduser",
-#		group => "hadoop",
-#		alias => "format-drives",
-#		require => Package["parted"],
-#		mode => "644",
-#		source => "puppet:///modules/hadoop/scripts/format.sh",
-#	}
-
-#	exec { "format-commmand":
-#		command => "/sbin/format-drives-b-x",
-#		creates => "/dev/sdb1",
-#		require => File['format-drives'],
-#	}
 	
 	package { "parted":
 		ensure => installed;
@@ -68,5 +52,5 @@ class hadoop::format {
 		}
 	}
 
-	formatAndMountDrive { ["b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x"]: }
+	formatAndMountDrive { $drives : }
 }
