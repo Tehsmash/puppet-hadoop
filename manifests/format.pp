@@ -10,10 +10,19 @@ class hadoop::format( $drives = ["b"] ) {
 	}	
 
 	define formatAndMountDrive {
+#		mount { "/drive${title}":
+#			device => "/dev/sd${title}1",
+#			ensure => "absent",
+#			fstype => "ext4",
+#			options => "defaults",
+#			atboot => "true",
+#			alias => "unmountDrive${title}",
+#		}
 		exec { "partition-table-${title}":
 			command => "parted -a optimal --script /dev/sd${title} -- mktable gpt",
 			creates => "/dev/sd${title}1",
 			require => Package["parted"],
+#			subscribe => Mount["unmountDrive${title}"]
 		}
 		exec { "make-partition-${title}":
 			command => "parted -a optimal --script /dev/sd${title} -- mkpart ext2 2 100%",
@@ -43,12 +52,19 @@ class hadoop::format( $drives = ["b"] ) {
 			atboot => "true",
 			require => File["/drive${title}"]
 		}
-		file { "/drive${title}/dfs/data":
+		file { "/drive${title}/dfs":
 			ensure => "directory",
 			owner => "hduser",
 			group => "hadoop",
 			require => [ User["hduser"], Group["hadoop"] ],
 			subscribe => Mount["/drive${title}"],
+		}
+		file { "/drive${title}/dfs/data":
+			ensure => "directory",
+			owner => "hduser",
+			group => "hadoop",
+			require => [ User["hduser"], Group["hadoop"] ],
+			subscribe => File["/drive${title}/dfs"],
 		}
 	}
 
