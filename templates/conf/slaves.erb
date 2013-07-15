@@ -1,4 +1,3 @@
-<%= scope.lookupvar('hadoop::params::master') %><%= scope.lookupvar('hadoop::params::domain') %>
-<% ("1"..scope.lookupvar('hadoop::params::numofslaves')).each do |var| -%>
-<%= scope.lookupvar('hadoop::params::slaveprefix') %><%= var %><%= scope.lookupvar('hadoop::params::domain') %>
+<% ("1"..@number).each do |var| -%>
+<%= @hostname %><%= var %><%= @domain %>
 <% end -%>

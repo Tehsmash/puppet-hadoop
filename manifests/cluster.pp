@@ -4,8 +4,7 @@ class hadoop::cluster {
 	# do nothing, magic lookup helper
 }
 
-class hadoop::cluster::master {
-	
+class hadoop::cluster::master($hostname = "hadoopmaster", $domain = "") {
         file { "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}/conf/masters":
 		owner => "hduser",
 		group => "hadoop",
@@ -16,7 +15,7 @@ class hadoop::cluster::master {
 
 }
 
-class hadoop::cluster::slave {
+class hadoop::cluster::slave($hostname = "hadoopslave", $number = 1, $domain = "") {
         file { "${hadoop::params::hadoop_base}/hadoop-${hadoop::params::version}/conf/slaves":
 		owner => "hduser",
 		group => "hadoop",

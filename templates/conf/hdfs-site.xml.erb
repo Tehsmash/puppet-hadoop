@@ -2,6 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
 <property>
+  <name>dfs.blocksize</name>
+  <value>134217728</value>
+</property>
+<property>
   <name>dfs.replication</name>
   <value><%= scope.lookupvar('hadoop::params::replication') %></value>
   <description>Default block replication.
@@ -17,12 +21,6 @@
   list of directories, then data will be stored in all named
   directories, typically on different devices.
   Directories that do not exist are ignored.
-  </description>
-</property>
-<property>
-  <name>dfs.blocksize</name>
-  <value>268435456</value>
-  <description>The default block size for new files, in bytes. You can use the following suffix (case insensitive): k(kilo), m(mega), g(giga), t(tera), p(peta), e(exa) to specify the size (such as 128k, 512m, 1g, etc.), Or provide complete size in bytes (such as 134217728 for 128 MB).
   </description>
 </property>
 </configuration>

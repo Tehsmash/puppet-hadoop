@@ -12,22 +12,6 @@ class hadoop::params {
 		default			=> "1.1.2",
 	}        
 
-	$domain = $::hostname ? {
-		default 		=> ".bigdata.lab",
-	}
-
-	$master = $::hostname ? {
-		default			=> "hadoopMaster",
-	}
-       
-	$slaveprefix = $::hostname ? {
-		default 		=> "hadoopSlave",
-	}
-
-	$numofslaves = $::hostname ? {
-		default 		=> "15",
-	}
- 
 	$hdfsport = $::hostname ? {
 		default			=> "8020",
 	}
