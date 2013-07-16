@@ -1,6 +1,6 @@
 # File for formating all the disks
 
-class hadoop::format( $drives = ["b"] ) {
+class hadoop::format( $drives = ["b"], $disk_prefix = "sd" ) {
 	Exec {
 		path => ["/bin", "/usr/bin", "/sbin"]
 	}
@@ -19,20 +19,20 @@ class hadoop::format( $drives = ["b"] ) {
 #			alias => "unmountDrive${title}",
 #		}
 		exec { "partition-table-${title}":
-			command => "parted -a optimal --script /dev/sd${title} -- mktable gpt",
+			command => "parted -a optimal --script /dev/${disk_prefix}${title} -- mktable gpt",
 			creates => "/dev/sd${title}1",
 			require => Package["parted"],
 #			subscribe => Mount["unmountDrive${title}"]
 		}
 		exec { "make-partition-${title}":
-			command => "parted -a optimal --script /dev/sd${title} -- mkpart ext2 2 100%",
+			command => "parted -a optimal --script /dev/${disk_prefix}${title} -- mkpart ext2 2 100%",
 			creates => "/dev/sd${title}1",
 			refreshonly => true,
 			require => Package["parted"],
 			subscribe => Exec["partition-table-${title}"]
 		}
 		exec { "make-filesystem-${title}":
-			command => "mkfs.ext4 /dev/sd${title}1",
+			command => "mkfs.ext4 /dev/${disk_prefix}${title}1",
 			require => Package["parted"],
 			refreshonly => true,
 			subscribe => Exec["make-partition-${title}"]
@@ -45,7 +45,7 @@ class hadoop::format( $drives = ["b"] ) {
 			subscribe => Exec["make-filesystem-${title}"],
 		}
 		mount { "/drive${title}":
-			device => "/dev/sd${title}1",
+			device => "/dev/${disk_prefix}${title}1",
 			ensure => "mounted",
 			fstype => "ext4",
 			options => "defaults",

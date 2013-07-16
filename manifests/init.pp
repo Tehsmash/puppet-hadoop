@@ -1,6 +1,6 @@
 # /etc/puppet/modules/hadoop/manafests/init.pp
 
-class hadoop ( $master = "hadoopMaster", $slave = "hadoopSlave", $number = 7, $domain = ".bigdata.lab", $disks = [] ) {
+class hadoop ( $master = "hadoopMaster", $slave = "hadoopSlave", $number = 7, $domain = ".bigdata.lab", $disks = [], $disk_prefix = "sd") {
   Exec {
           path => ['/bin','/usr/bin','/sbin'],
   }
